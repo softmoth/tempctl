@@ -1,7 +1,7 @@
 -- Measure temperature and post data to thingspeak.com
 -- 2014 OK1CDJ
 
-dofile('info.lua')
+dofile('config.lua')
 
 pin = 3
 

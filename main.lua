@@ -1,4 +1,4 @@
-dofile('info.lua')
+dofile('config.lua')
 
 print("Setting up WIFI...")
 wifi.setmode(wifi.STATION)
