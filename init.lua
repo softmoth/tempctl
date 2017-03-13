@@ -21,4 +21,5 @@ uart.on("data", "c",
                 end
         end, 0)
 
-tmr.alarm(0, 2000, 0, startup)
+--tmr.alarm(0, 2000, 0, startup)
+tmr.create():alarm(2000, tmr.ALARM_SINGLE, startup)
