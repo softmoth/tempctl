@@ -9,6 +9,7 @@ ow.setup(pin)
 
 counter = 0
 lasttemp = -999
+targettemp = -999
 
 function bxor(a,b)
    local r = 0
@@ -78,7 +79,6 @@ function sendData()
     conn:on("receive", function(conn, payload) print(payload) end)
     -- api.thingspeak.com 184.106.153.149
     conn:connect(80, '184.106.153.149')
-    field = 'field2'
     conn:send("GET /update?key="..thing_api_key.."&"..thing_field.."="..temp.." HTTP/1.1\r\n")
     conn:send("Host: api.thingspeak.com\r\n")
     conn:send("Accept: */*\r\n")
