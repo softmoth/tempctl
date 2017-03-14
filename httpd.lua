@@ -16,7 +16,10 @@ srv:listen(80,function(conn)
         end
 
         if(_GET.settemp ~= nil)then
-            targettemp = _GET.settemp
+            local tmp = tonumber(_GET.settemp)
+            if (tmp ~= nil) then
+                targettemp = tmp
+            end
         end
 
         header = "HTTP/1.1 200 OK\r\n\r\n"

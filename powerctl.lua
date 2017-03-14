@@ -30,8 +30,8 @@ function powerctl()
         pin_on(heat_pin)
     else
         print("... cooling down to target")
-        pin_off(cool_pin)
-        pin_on(heat_pin)
+        pin_off(heat_pin)
+        pin_on(cool_pin)
     end
 end
 
