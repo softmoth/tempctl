@@ -4,7 +4,7 @@ srv:listen(80, function(conn)
     conn:on("receive", function(client, request)
         local method, path, vars = request:match("([A-Z]+) (.+)?(.+) HTTP")
         if (method == nil) then
-            method, path = request:find("([A-Z]+) (.+) HTTP")
+            method, path = request:match("([A-Z]+) (.+) HTTP")
         end
         local _GET = {}
         if (vars ~= nil) then
