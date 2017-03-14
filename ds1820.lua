@@ -98,4 +98,6 @@ function sendData()
 end
 
 -- send data every X ms to thing speak
-tmr.alarm(0, 1 * 60 * 1000, 1, sendData)
+sendData()
+local timer = tmr.create()
+timer:alarm(1 * 60 * 1000, tmr.ALARM_AUTO, sendData)
