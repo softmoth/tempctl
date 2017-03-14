@@ -1,16 +1,14 @@
 srv = net.createServer(net.TCP)
 
-
-srv:listen(80,function(conn)
-
-    conn:on("receive", function(client,request)
-        local _, _, method, path, vars = string.find(request, "([A-Z]+) (.+)?(.+) HTTP")
-        if(method == nil)then
-            _, _, method, path = string.find(request, "([A-Z]+) (.+) HTTP")
+srv:listen(80, function(conn)
+    conn:on("receive", function(client, request)
+        local method, path, vars = request:match("([A-Z]+) (.+)?(.+) HTTP")
+        if (method == nil) then
+            method, path = request:find("([A-Z]+) (.+) HTTP")
         end
         local _GET = {}
-        if (vars ~= nil)then
-            for k, v in string.gmatch(vars, "(%w+)=(%w+)&*") do
+        if (vars ~= nil) then
+            for k, v in vars:gmatch("(%w+)=(%w+)&*") do
                 _GET[k] = v
             end
 
@@ -21,7 +19,7 @@ srv:listen(80,function(conn)
                 end
             end
 
-            header = "HTTP/1.1 302 Found\r\nLocation: /\r\n"
+            header = "HTTP/1.1 302 Found\r\nLocation: /\r\n\r\n"
             html = ""
         else
             header = "HTTP/1.1 200 OK\r\n\r\n"
@@ -42,9 +40,10 @@ srv:listen(80,function(conn)
             end
         end
 
-        client:send(header..html)
+        client:send(header .. html)
+
         print("HTTP Server is now listening. Free Heap:", node.heap())
     end)
 
-    conn:on("sent",function(conn) conn:close() end)
+    conn:on("sent", function(conn) conn:close() end)
 end)

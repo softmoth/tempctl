@@ -1,8 +1,5 @@
 dofile('config.lua')
 
-local heat_pin = 6
-local cool_pin = 7
-
 gpio.mode(heat_pin, gpio.OUTPUT)
 gpio.mode(cool_pin, gpio.OUTPUT)
 
@@ -35,9 +32,4 @@ function powerctl()
     end
 end
 
-local timer = tmr.create()
-timer:alarm(10 * 1000, tmr.ALARM_AUTO, powerctl)
-
---timer:alarm(3 * 1000, tmr.ALARM_AUTO, function ()
---        print("powerctl, last = ", lasttemp, ", target = ", targettemp)
---    end)
+loop(10 * 1000, powerctl)

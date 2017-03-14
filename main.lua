@@ -19,6 +19,12 @@ function trythen(initf, contf, delay, delay_msg)
     end
 end
 
+function loop(delay, func)
+    func()
+    local timer = tmr.create()
+    timer:alarm(delay, tmr.ALARM_AUTO, func)
+end
+
 print("Setting up WIFI (" .. wifi_ssid .. ")")
 wifi.setmode(wifi.STATION)
 wifi.sta.config(wifi_ssid, wifi_password)

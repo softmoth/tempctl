@@ -16,10 +16,9 @@ uart.on("data", "c",
         function(data)
                 --print("receive from uart:", data)
                 if data == "c" then
-                        abort = true
-                        uart.on("data")
+                    abort = true
+                    uart.on("data")
                 end
         end, 0)
 
---tmr.alarm(0, 2000, 0, startup)
 tmr.create():alarm(2000, tmr.ALARM_SINGLE, startup)
