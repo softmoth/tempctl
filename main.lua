@@ -1,13 +1,13 @@
 dofile('config.lua')
 
+lasttemp = -999
+targettemp = -999
+
 function trythen(initf, contf, delay, delay_msg)
     local result = initf()
     if (result == nil) then
-        local i = 0
         local timer = tmr.create()
         timer:alarm(delay, tmr.ALARM_AUTO, function()
-                i = i + 1
-                print("Attempt #" .. i)
                 result = initf()
                 if result == nil then
                     print(delay_msg)
@@ -30,6 +30,7 @@ trythen(
         print("Config done, IP is " .. res)
         dofile('ds1820.lua')
         dofile('httpd.lua')
+        dofile('powerctl.lua')
     end,
     1000,
     "IP unavailable, waiting...")
