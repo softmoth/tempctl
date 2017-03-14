@@ -53,7 +53,9 @@ function getTemp()
                             t = (-1) * t
                         end
                         t = t * 625
-                        lasttemp = t
+                        lasttemp = t / 10000
+                        -- If not compiled with floating point support
+                        --lasttemp = t
                         print("Last temp: " .. lasttemp)
                     end
                     tmr.wdclr()
@@ -67,7 +69,7 @@ end
 --- Get temp and send data to thingspeak.com
 function sendData()
     getTemp()
-    local temp = string.format("%.2f", lasttemp / 10000)
+    local temp = string.format("%.2f", lasttemp)
     -- If not compiled with floating point support
     --local t1 = lasttemp / 10000
     --local t2 = (lasttemp >= 0 and lasttemp % 10000) or (10000 - lasttemp % 10000)
