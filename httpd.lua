@@ -13,30 +13,33 @@ srv:listen(80,function(conn)
             for k, v in string.gmatch(vars, "(%w+)=(%w+)&*") do
                 _GET[k] = v
             end
-        end
 
-        if(_GET.settemp ~= nil)then
-            local tmp = tonumber(_GET.settemp)
-            if (tmp ~= nil) then
-                targettemp = tmp
+            if (_GET.settemp ~= nil) then
+                local tmp = tonumber(_GET.settemp)
+                if (tmp ~= nil) then
+                    targettemp = tmp
+                end
             end
-        end
 
-        header = "HTTP/1.1 200 OK\r\n\r\n"
-        html   = "<h1>ESP8266 Fermentation Controller</h1>"
-        if (lasttemp ~= nil) then
-            html = html .. "<p>Current temperature is: " .. lasttemp .. "</p>"
-        end
-        if (targettemp ~= nil) then
-            html = html .. "<p>Target temperature is: " .. targettemp .. "</p>"
-        end
-        html = html .. "<form action='' method='GET'>"
-        html = html .. "<p>Set target temperature: <input name='settemp'> (Celsius)</p>"
-        html = html .. "<br>"
-        if (thing_field_chart_url ~= nil) then
-            html = html .. '<iframe width="450" height="260" style="border: 1px solid #cccccc;"src="'
-            html = html .. thing_field_chart_url
-            html = html .. '"></iframe>'
+            header = "HTTP/1.1 302 Found\r\nLocation: /\r\n"
+            html = ""
+        else
+            header = "HTTP/1.1 200 OK\r\n\r\n"
+            html   = "<h1>ESP8266 Fermentation Controller</h1>"
+            if (lasttemp ~= nil) then
+                html = html .. "<p>Current temperature is: " .. lasttemp .. "</p>"
+            end
+            if (targettemp ~= nil) then
+                html = html .. "<p>Target temperature is: " .. targettemp .. "</p>"
+            end
+            html = html .. "<form action='' method='GET'>"
+            html = html .. "<p>Set target temperature: <input name='settemp'> (Celsius)</p>"
+            html = html .. "<br>"
+            if (thing_field_chart_url ~= nil) then
+                html = html .. '<iframe width="450" height="260" style="border: 1px solid #cccccc;"src="'
+                html = html .. thing_field_chart_url
+                html = html .. '"></iframe>'
+            end
         end
 
         client:send(header..html)
