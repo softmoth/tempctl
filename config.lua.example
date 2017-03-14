@@ -2,3 +2,5 @@ wifi_ssid     = 'YOUR-SSID'
 wifi_password = 'YOUR-WIFI-PASSWORD'
 thing_api_key = 'YOUR-THINGSPEAK-API-KEY'
 thing_field   = 'field1'
+--thing_field_chart_url = 'https://thingspeak.com/channels/URL/BLAH/BLAH/BLAH'
+thing_field_chart_url = nil
