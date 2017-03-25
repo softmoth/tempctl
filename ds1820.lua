@@ -20,7 +20,7 @@ function bxor(a, b)
 end
 
 --- Get temperature from DS18B20
-function getTemp(pin, callback_func)
+function getTemp(pin)
     ow.reset_search(pin)
     -- FIXME: Only gets the first device on the 1-Wire bus!
     local addr = ow.search(pin)
@@ -51,7 +51,8 @@ function getTemp(pin, callback_func)
                             end
                             t = t * 625
                             -- NB: This expects -float firmware
-                            callback_func(t / 10000)
+                            --callback_func(t / 10000)
+                            lasttemp = t / 10000
                         end
                     end)
             end
@@ -59,30 +60,4 @@ function getTemp(pin, callback_func)
     end
 end
 
---- Get temp and send data to thingspeak.com
-function sendData(t)
-    lasttemp = t
-    local temp = string.format("%.2f", t)
-    print("Temperature: " .. temp .. "°C")
-    local conn = net.createConnection(net.TCP, 0)
-    conn:on("receive", function(conn, payload) print(payload) end)
-    conn:on("connection",
-        function(conn)
-            --print("Sending data to thingspeak.com")
-            local req = "GET /update?key=" .. thing_api_key
-            req = req .. "&" .. thing_field .. "=" .. temp
-            req = req .. " HTTP/1.1\r\n"
-            req = req .. "Host: api.thingspeak.com\r\n"
-            req = req .. "Accept: */*\r\n"
-            req = req .. "User-Agent: Mozilla/4.0 (compatible; esp8266 Lua)\r\n"
-            req = req .. "\r\n"
-            conn:send(req)
-        end)
-
-    conn:on("sent", function(conn) conn:close() end)
-
-    -- api.thingspeak.com 184.106.153.149
-    conn:connect(80, '184.106.153.149')
-end
-
-loop(1 * 60 * 1000, function() getTemp(ds1820_pin, sendData) end)
+loop(getTempInterval * 1000, function() getTemp(ds1820_pin) end)

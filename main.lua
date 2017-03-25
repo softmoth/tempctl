@@ -37,6 +37,7 @@ trythen(
         dofile('ds1820.lua')
         dofile('httpd.lua')
         dofile('powerctl.lua')
+        dofile('logdata.lua')
     end,
     1000,
     "IP unavailable, waiting...")

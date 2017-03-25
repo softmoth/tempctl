@@ -1,4 +1,4 @@
-dofile('config.lua')
+--dofile('config.lua')
 
 gpio.mode(heat_pin, gpio.OUTPUT)
 gpio.mode(cool_pin, gpio.OUTPUT)
@@ -11,9 +11,17 @@ function pin_on(pin)
     gpio.write(pin, gpio.LOW)
 end
 
+function validTemp(t)
+    if (t < -10 or t > 110) then
+        return false
+    end
+    return true
+end
+
 function powerctl()
     print("powerctl:  last = ", lasttemp, "  target = ", targettemp)
-    if (targettemp < -10 or targettemp > 110) then
+    --if (targettemp < -10 or targettemp > 110) then
+    if not validTemp(targettemp) then
         print("... target out of range, ignoring")
         pin_off(heat_pin)
         pin_off(cool_pin)
