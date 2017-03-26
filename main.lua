@@ -20,6 +20,8 @@ function trythen(initf, contf, delay, delay_msg)
 end
 
 function loop(delay, func)
+    print("Making loop of length:")
+    print(delay)
     func()
     local timer = tmr.create()
     timer:alarm(delay, tmr.ALARM_AUTO, func)

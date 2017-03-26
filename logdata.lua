@@ -30,4 +30,5 @@ function sendData(sensor_id)
     end
 end
 
+print("logdata: loop()")
 loop(sendDataInterval * 1000, function() sendData(thing_field) end)

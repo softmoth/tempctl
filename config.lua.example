@@ -10,5 +10,5 @@ ds1820_pin = 3
 heat_pin = 6
 cool_pin = 7
 
-getTempInterval  = 30   -- 30 seconds
-sendDataInterval = 15   -- 15 minutes
+getTempInterval  = 30        -- 30 seconds
+sendDataInterval = 15 * 60   -- 15 minutes

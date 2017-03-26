@@ -40,4 +40,5 @@ function powerctl()
     end
 end
 
+print("powerctl: loop()")
 loop(10 * 1000, powerctl)

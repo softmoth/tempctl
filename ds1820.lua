@@ -60,4 +60,5 @@ function getTemp(pin)
     end
 end
 
+print("ds1820: loop()")
 loop(getTempInterval * 1000, function() getTemp(ds1820_pin) end)
